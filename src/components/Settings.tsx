@@ -16,7 +16,6 @@ export function Settings({ onClose }: SettingsProps) {
   const [testResult, setTestResult] = useState<'success' | 'error' | null>(null)
   const [models, setModels] = useState<string[]>([])
 
-  // Load models when URL changes
   useEffect(() => {
     if (apiUrl) {
       const api = new HermesAPI({ apiUrl, apiKey, model })
@@ -46,15 +45,15 @@ export function Settings({ onClose }: SettingsProps) {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4">
+      <div className="bg-surface-primary rounded-2xl shadow-xl w-full max-w-md mx-4">
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b">
-          <h2 className="text-lg font-semibold text-gray-800">设置</h2>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-edge-primary">
+          <h2 className="text-lg font-semibold text-content-primary">设置</h2>
           <button
             onClick={onClose}
-            className="p-1 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-1 rounded-lg hover:bg-surface-tertiary transition-colors"
           >
-            <X className="w-5 h-5 text-gray-500" />
+            <X className="w-5 h-5 text-content-secondary" />
           </button>
         </div>
 
@@ -62,7 +61,7 @@ export function Settings({ onClose }: SettingsProps) {
         <div className="px-6 py-4 space-y-4">
           {/* API URL */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-content-secondary mb-1">
               API 地址
             </label>
             <input
@@ -70,16 +69,16 @@ export function Settings({ onClose }: SettingsProps) {
               value={apiUrl}
               onChange={(e) => setApiUrl(e.target.value)}
               placeholder="http://localhost:8080"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-hermes-500 focus:ring-1 focus:ring-hermes-500"
+              className="w-full px-3 py-2 border border-edge-secondary bg-surface-primary text-content-primary placeholder:text-content-tertiary rounded-lg focus:outline-none focus:border-hermes-500 focus:ring-1 focus:ring-hermes-500"
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-content-tertiary mt-1">
               Hermes Gateway API Server 地址
             </p>
           </div>
 
           {/* API Key */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-content-secondary mb-1">
               API Key
             </label>
             <input
@@ -87,22 +86,22 @@ export function Settings({ onClose }: SettingsProps) {
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
               placeholder="可选，localhost 免认证"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-hermes-500 focus:ring-1 focus:ring-hermes-500"
+              className="w-full px-3 py-2 border border-edge-secondary bg-surface-primary text-content-primary placeholder:text-content-tertiary rounded-lg focus:outline-none focus:border-hermes-500 focus:ring-1 focus:ring-hermes-500"
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-content-tertiary mt-1">
               留空则使用免认证模式（仅限 localhost）
             </p>
           </div>
 
           {/* Model */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-content-secondary mb-1">
               模型
             </label>
             <select
               value={model}
               onChange={(e) => setModel(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-hermes-500 focus:ring-1 focus:ring-hermes-500"
+              className="w-full px-3 py-2 border border-edge-secondary bg-surface-primary text-content-primary rounded-lg focus:outline-none focus:border-hermes-500 focus:ring-1 focus:ring-hermes-500"
             >
               <option value="">使用默认模型</option>
               {models.map((m) => (
@@ -118,7 +117,7 @@ export function Settings({ onClose }: SettingsProps) {
             <button
               onClick={handleTest}
               disabled={!apiUrl || testing}
-              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+              className="px-4 py-2 border border-edge-secondary rounded-lg hover:bg-surface-tertiary transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-content-primary"
             >
               {testing ? (
                 <Loader2 className="w-4 h-4 animate-spin" />
@@ -135,7 +134,7 @@ export function Settings({ onClose }: SettingsProps) {
             )}
 
             {testResult === 'error' && (
-              <div className="flex items-center gap-1 text-sm text-red-600">
+              <div className="flex items-center gap-1 text-sm text-red-500">
                 <AlertCircle className="w-4 h-4" />
                 连接失败
               </div>
@@ -144,10 +143,10 @@ export function Settings({ onClose }: SettingsProps) {
         </div>
 
         {/* Footer */}
-        <div className="flex justify-end gap-3 px-6 py-4 border-t bg-gray-50 rounded-b-2xl">
+        <div className="flex justify-end gap-3 px-6 py-4 border-t border-edge-primary bg-surface-secondary rounded-b-2xl">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+            className="px-4 py-2 text-content-secondary hover:bg-surface-tertiary rounded-lg transition-colors"
           >
             取消
           </button>

@@ -67,7 +67,6 @@ export function Chat({ sessionId, onSessionCreated }: ChatProps) {
       messageCount: 0,
     }
 
-    // Save session to list
     const sessions = JSON.parse(localStorage.getItem('hermes-sessions') || '[]')
     sessions.unshift(session)
     localStorage.setItem('hermes-sessions', JSON.stringify(sessions))
@@ -101,7 +100,6 @@ export function Chat({ sessionId, onSessionCreated }: ChatProps) {
     setInput('')
     setIsLoading(true)
 
-    // Prepare messages for API
     const apiMessages = [...messages, userMessage].map((m) => ({
       role: m.role,
       content: m.content,
@@ -111,7 +109,6 @@ export function Chat({ sessionId, onSessionCreated }: ChatProps) {
 
     await api.chat(
       apiMessages,
-      // onChunk
       (chunk) => {
         fullContent += chunk
         setMessages((prev) =>
@@ -122,7 +119,6 @@ export function Chat({ sessionId, onSessionCreated }: ChatProps) {
           )
         )
       },
-      // onToolCall
       (tc) => {
         const toolCall: ToolCall = {
           id: tc.id,
@@ -132,7 +128,6 @@ export function Chat({ sessionId, onSessionCreated }: ChatProps) {
         }
         setCurrentToolCall(toolCall)
       },
-      // onDone
       () => {
         setMessages((prev) =>
           prev.map((m) =>
@@ -144,7 +139,6 @@ export function Chat({ sessionId, onSessionCreated }: ChatProps) {
         setCurrentToolCall(null)
         setIsLoading(false)
 
-        // Update session title if first message
         if (messages.length === 0) {
           const title = input.trim().slice(0, 50) + (input.trim().length > 50 ? '...' : '')
           const sessions = JSON.parse(localStorage.getItem('hermes-sessions') || '[]')
@@ -154,7 +148,6 @@ export function Chat({ sessionId, onSessionCreated }: ChatProps) {
           localStorage.setItem('hermes-sessions', JSON.stringify(updated))
         }
       },
-      // onError
       (error) => {
         setMessages((prev) =>
           prev.map((m) =>
@@ -181,7 +174,7 @@ export function Chat({ sessionId, onSessionCreated }: ChatProps) {
       {/* Messages */}
       <div className="flex-1 overflow-y-auto p-6 space-y-4">
         {messages.length === 0 ? (
-          <div className="flex flex-col items-center justify-center h-full text-gray-400">
+          <div className="flex flex-col items-center justify-center h-full text-content-tertiary">
             <div className="text-6xl mb-4">✦</div>
             <p className="text-lg font-medium">Hermes Agent</p>
             <p className="text-sm mt-1">发送消息开始对话</p>
@@ -192,7 +185,6 @@ export function Chat({ sessionId, onSessionCreated }: ChatProps) {
           ))
         )}
 
-        {/* Current Tool Call */}
         {currentToolCall && (
           <ToolCallDisplay toolCall={currentToolCall} />
         )}
@@ -201,10 +193,10 @@ export function Chat({ sessionId, onSessionCreated }: ChatProps) {
       </div>
 
       {/* Input */}
-      <div className="border-t bg-white p-4">
+      <div className="border-t bg-surface-primary border-edge-primary p-4">
         <div className="flex items-end gap-3 max-w-4xl mx-auto">
           <button
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-500"
+            className="p-2 rounded-lg hover:bg-surface-tertiary transition-colors text-content-secondary"
             title="添加附件"
           >
             <Paperclip className="w-5 h-5" />
@@ -217,7 +209,7 @@ export function Chat({ sessionId, onSessionCreated }: ChatProps) {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="输入消息... (Shift+Enter 换行)"
-              className="w-full resize-none rounded-xl border border-gray-200 px-4 py-3 pr-12 focus:outline-none focus:border-hermes-500 focus:ring-1 focus:ring-hermes-500 max-h-[200px]"
+              className="w-full resize-none rounded-xl border border-edge-primary bg-surface-primary text-content-primary placeholder:text-content-tertiary px-4 py-3 pr-12 focus:outline-none focus:border-hermes-500 focus:ring-1 focus:ring-hermes-500 max-h-[200px]"
               rows={1}
               disabled={isLoading}
             />

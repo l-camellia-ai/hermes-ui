@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ========== Theme Variables ========== */
 :root {
+  /* hermes green palette (shared) */
   --hermes-50: #f0fdf4;
   --hermes-100: #dcfce7;
   --hermes-200: #bbf7d0;
@@ -13,6 +15,71 @@
   --hermes-700: #15803d;
   --hermes-800: #166534;
   --hermes-900: #14532d;
+
+  /* Semantic colors — Light (default) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+  --bg-sidebar: #111827;
+  --bg-sidebar-hover: #1f2937;
+  --bg-sidebar-active: #374151;
+
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --text-sidebar: #d1d5db;
+  --text-sidebar-heading: #f9fafb;
+
+  --border-primary: #e5e7eb;
+  --border-secondary: #d1d5db;
+  --border-sidebar: #374151;
+
+  --scrollbar-thumb: #d1d5db;
+  --scrollbar-thumb-hover: #9ca3af;
+
+  /* Markdown code blocks (shared — always dark) */
+  --code-bg: #1f2937;
+  --code-text: #e5e7eb;
+  --code-inline-bg: #f3f4f6;
+
+  /* Markdown misc */
+  --blockquote-border: #d1d5db;
+  --blockquote-text: #6b7280;
+  --table-border: #e5e7eb;
+  --table-header-bg: #f9fafb;
+}
+
+[data-theme="dark"] {
+  --hermes-400: #4ade80;
+  --hermes-500: #22c55e;
+  --hermes-600: #16a34a;
+
+  --bg-primary: #0f0f1a;
+  --bg-secondary: #1a1a2e;
+  --bg-tertiary: #252540;
+  --bg-sidebar: #0a0a14;
+  --bg-sidebar-hover: #1a1a2e;
+  --bg-sidebar-active: #252540;
+
+  --text-primary: #e5e7eb;
+  --text-secondary: #9ca3af;
+  --text-tertiary: #6b7280;
+  --text-sidebar: #9ca3af;
+  --text-sidebar-heading: #e5e7eb;
+
+  --border-primary: #252540;
+  --border-secondary: #374151;
+  --border-sidebar: #1a1a2e;
+
+  --scrollbar-thumb: #374151;
+  --scrollbar-thumb-hover: #4b5563;
+
+  --code-inline-bg: #252540;
+
+  --blockquote-border: #374151;
+  --blockquote-text: #9ca3af;
+  --table-border: #252540;
+  --table-header-bg: #1a1a2e;
 }
 
 * {
@@ -26,6 +93,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.2s, color 0.2s;
 }
 
 /* Custom scrollbar */
@@ -39,12 +109,12 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #d1d5db;
+  background: var(--scrollbar-thumb);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #9ca3af;
+  background: var(--scrollbar-thumb-hover);
 }
 
 /* Markdown styles */
@@ -62,7 +132,7 @@ body {
 }
 
 .markdown-body code {
-  background-color: #f3f4f6;
+  background-color: var(--code-inline-bg);
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 13px;
@@ -70,8 +140,8 @@ body {
 }
 
 .markdown-body pre {
-  background-color: #1f2937;
-  color: #e5e7eb;
+  background-color: var(--code-bg);
+  color: var(--code-text);
   padding: 16px;
   border-radius: 8px;
   overflow-x: auto;
@@ -94,9 +164,9 @@ body {
 }
 
 .markdown-body blockquote {
-  border-left: 4px solid #d1d5db;
+  border-left: 4px solid var(--blockquote-border);
   padding-left: 16px;
-  color: #6b7280;
+  color: var(--blockquote-text);
   margin: 12px 0;
 }
 
@@ -125,18 +195,18 @@ body {
 }
 
 .markdown-body th, .markdown-body td {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--table-border);
   padding: 8px 12px;
   text-align: left;
 }
 
 .markdown-body th {
-  background-color: #f9fafb;
+  background-color: var(--table-header-bg);
   font-weight: 600;
 }
 
 .markdown-body a {
-  color: #22c55e;
+  color: var(--hermes-500);
   text-decoration: none;
 }
 

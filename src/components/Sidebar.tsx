@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Session } from '@/types'
-import { Plus, MessageSquare, Settings, Trash2 } from 'lucide-react'
+import { Plus, MessageSquare, Settings, Trash2, Moon, Sun } from 'lucide-react'
 
 interface SidebarProps {
   currentSessionId: string | null
   onSessionSelect: (id: string) => void
   onNewSession: () => void
   onOpenSettings: () => void
+  theme: 'light' | 'dark'
+  onToggleTheme: () => void
 }
 
 export function Sidebar({
@@ -14,6 +16,8 @@ export function Sidebar({
   onSessionSelect,
   onNewSession,
   onOpenSettings,
+  theme,
+  onToggleTheme,
 }: SidebarProps) {
   const [sessions, setSessions] = useState<Session[]>([])
 
@@ -53,12 +57,12 @@ export function Sidebar({
   }
 
   return (
-    <div className="w-64 bg-gray-900 text-white flex flex-col">
+    <div className="w-64 bg-sidebar text-sidebar-heading flex flex-col">
       {/* Header */}
-      <div className="p-4 border-b border-gray-700">
+      <div className="p-4 border-b border-sidebar-border">
         <button
           onClick={onNewSession}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-600 hover:bg-gray-800 transition-colors"
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg border border-sidebar-border hover:bg-sidebar-hover transition-colors"
         >
           <Plus className="w-4 h-4" />
           <span>新对话</span>
@@ -68,8 +72,8 @@ export function Sidebar({
       {/* Sessions List */}
       <div className="flex-1 overflow-y-auto p-2">
         {sessions.length === 0 ? (
-          <div className="text-center text-gray-500 py-8">
-            <MessageSquare className="w-8 h-8 mx-auto mb-2 opacity-50" />
+          <div className="text-center text-sidebar-text py-8 opacity-50">
+            <MessageSquare className="w-8 h-8 mx-auto mb-2" />
             <p className="text-sm">暂无对话</p>
           </div>
         ) : (
@@ -80,8 +84,8 @@ export function Sidebar({
                 onClick={() => onSessionSelect(session.id)}
                 className={`w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-colors group ${
                   currentSessionId === session.id
-                    ? 'bg-gray-700 text-white'
-                    : 'text-gray-300 hover:bg-gray-800'
+                    ? 'bg-sidebar-active text-sidebar-heading'
+                    : 'text-sidebar-text hover:bg-sidebar-hover'
                 }`}
               >
                 <MessageSquare className="w-4 h-4 flex-shrink-0" />
@@ -99,10 +103,24 @@ export function Sidebar({
       </div>
 
       {/* Footer */}
-      <div className="p-4 border-t border-gray-700">
+      <div className="p-4 border-t border-sidebar-border space-y-1">
+        {/* Theme Toggle */}
+        <button
+          onClick={onToggleTheme}
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-sidebar-hover transition-colors text-sidebar-text"
+        >
+          {theme === 'light' ? (
+            <Moon className="w-4 h-4" />
+          ) : (
+            <Sun className="w-4 h-4" />
+          )}
+          <span>{theme === 'light' ? '深色模式' : '浅色模式'}</span>
+        </button>
+
+        {/* Settings */}
         <button
           onClick={onOpenSettings}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-800 transition-colors text-gray-300"
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-sidebar-hover transition-colors text-sidebar-text"
         >
           <Settings className="w-4 h-4" />
           <span>设置</span>

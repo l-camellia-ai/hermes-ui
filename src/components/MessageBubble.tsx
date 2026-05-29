@@ -28,7 +28,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
         className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
           isUser
             ? 'bg-hermes-500 text-white'
-            : 'bg-gray-200 text-gray-600'
+            : 'bg-surface-tertiary text-content-secondary'
         }`}
       >
         {isUser ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
@@ -40,13 +40,13 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           className={`inline-block rounded-2xl px-4 py-3 ${
             isUser
               ? 'bg-hermes-500 text-white'
-              : 'bg-white border border-gray-200'
+              : 'bg-surface-primary border border-edge-primary'
           }`}
         >
           {isUser ? (
             <p className="whitespace-pre-wrap">{message.content}</p>
           ) : (
-            <div className="markdown-body">
+            <div className="markdown-body text-content-primary">
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
@@ -93,7 +93,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
           <div className="mt-1 flex gap-1">
             <button
               onClick={handleCopy}
-              className="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-gray-600"
+              className="p-1 rounded hover:bg-surface-tertiary text-content-tertiary hover:text-content-secondary"
               title="复制"
             >
               {copied ? (
@@ -107,7 +107,7 @@ export function MessageBubble({ message }: MessageBubbleProps) {
 
         {/* Streaming indicator */}
         {message.isStreaming && (
-          <div className="mt-1 flex items-center gap-1 text-xs text-gray-400">
+          <div className="mt-1 flex items-center gap-1 text-xs text-content-tertiary">
             <div className="w-2 h-2 rounded-full bg-hermes-500 animate-pulse-slow" />
             生成中...
           </div>
